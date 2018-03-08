@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Email Generator Lamda.
+Resources:
+  Emails:
+    Properties:
+      CodeUri: s3://email-generator-lamda/de6021a2c2ef7f299a7732a15e2a0a7e
+      Events:
+        Email:
+          Properties:
+            Method: get
+            Path: /email
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs6.10
+      Timeout: 10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

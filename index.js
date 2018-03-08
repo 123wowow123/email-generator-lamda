@@ -26,7 +26,9 @@ exports.handler = function (event, context, cb) {
     // console.log(context)
     // console.log(context.getRemainingTimeInMillis())
 
-    const to = event.to;
+    //debugger
+    const data = event.queryStringParameters;
+    const to = data.to;
 
     // const data = {
     //     "to": "flynni2008@gmail.com",
@@ -44,6 +46,10 @@ exports.handler = function (event, context, cb) {
     //     "about": "check out www.DiceManiac.com"
     // };
 
+
+    console.log('CRHONOPIN_SMTP_PASSWORD', process.env.CRHONOPIN_SMTP_PASSWORD)
+    console.log('AZURE_STORAGE_CONNECTION_STRING', process.env.AZURE_STORAGE_CONNECTION_STRING)
+
     let config = {
         auth: {
             pass: process.env.CRHONOPIN_SMTP_PASSWORD,
@@ -53,8 +59,14 @@ exports.handler = function (event, context, cb) {
 
     const mailClient = new MailClient(config);
     const sendSignupData = mailClient
-        .sendSignup(to, event)
-        .then((e) => { cb(null, e); })
+        .sendSignup(to, data)
+        .then((e) => {
+            debugger;
+            cb(null, {
+                "statusCode": 200,
+                "body": JSON.stringify(e)
+            });
+        })
         .catch(cb);
 
 }
