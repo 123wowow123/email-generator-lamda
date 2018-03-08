@@ -2,4 +2,4 @@
 Send Template Email From Lamda
 
 #Resources
-(docker-lambda)<https://github.com/lambci/docker-lambda>
+1. [docker-lambda](https://github.com/lambci/docker-lambda)
