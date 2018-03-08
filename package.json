@@ -1,0 +1,23 @@
+{
+  "name": "docker-run",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "docker run --env-file ./env.list --rm -v \"$PWD\":/var/task lambci/lambda:nodejs6.10 index.handler '{\"to\": \"flynni2008@gmail.com\"}'"
+  },
+  "dependencies": {
+    "email-generator": "git+https://github.com/123wowow123/email-generator.git#master"
+  },
+  "description": "Send Template Email From Lamda",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/123wowow123/email-generator-lamda.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/123wowow123/email-generator-lamda/issues"
+  },
+  "homepage": "https://github.com/123wowow123/email-generator-lamda#readme"
+}
