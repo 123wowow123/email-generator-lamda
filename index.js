@@ -7,44 +7,42 @@ const { MailClient } = require('email-generator');
 //const emailGenerator = require('nodemailer');
 
 exports.handler = function (event, context, cb) {
-    console.log(process.execPath)
-    console.log(process.execArgv)
-    console.log(process.argv)
-    console.log(process.cwd())
-    console.log(process.mainModule.filename)
-    console.log(__filename)
-    console.log(process.env)
-    console.log(process.getuid())
-    console.log(process.getgid())
-    console.log(process.geteuid())
-    console.log(process.getegid())
-    console.log(process.getgroups())
-    console.log(process.umask())
-
-    console.log("event", event)
-
-    console.log(context)
-
     context.callbackWaitsForEmptyEventLoop = false
 
-    console.log(context.getRemainingTimeInMillis())
+    // console.log(process.execPath)
+    // console.log(process.execArgv)
+    // console.log(process.argv)
+    // console.log(process.cwd())
+    // console.log(process.mainModule.filename)
+    // console.log(__filename)
+    // console.log(process.env)
+    // console.log(process.getuid())
+    // console.log(process.getgid())
+    // console.log(process.geteuid())
+    // console.log(process.getegid())
+    // console.log(process.getgroups())
+    // console.log(process.umask())
+    // console.log("event", event)
+    // console.log(context)
+    // console.log(context.getRemainingTimeInMillis())
 
     const to = event.to;
 
-    const data = {
-        facebookId: 10100470408434696,
-        firstName: 'Ian',
-        lastName: 'Flynn',
-        gender: 'Male',
-        locale: 'en_US',
-        pictureUrl: 'https://graph.facebook.com/10100470408434696/picture?type=large',
-        fbUpdatedTime: new Date(),
-        fbverified: true,
-        email: to,
-        role: 'user',
-        provider: 'facebook',
-        about: 'check out www.DiceManiac.com'
-    };
+    // const data = {
+    //     "to": "flynni2008@gmail.com",
+    //     "facebookId": 10100470408434696,
+    //     "firstName": "Ian",
+    //     "lastName": "Flynn",
+    //     "gender": "Male",
+    //     "locale": "en_US",
+    //     "pictureUrl": "https://graph.facebook.com/10100470408434696/picture?type=large",
+    //     "fbUpdatedTime": "2018-03-08T05:55:49.620Z",
+    //     "fbverified": true,
+    //     "email": "new_user@gmail.com",
+    //     "role": "user",
+    //     "provider": "facebook",
+    //     "about": "check out www.DiceManiac.com"
+    // };
 
     let config = {
         auth: {
@@ -55,7 +53,7 @@ exports.handler = function (event, context, cb) {
 
     const mailClient = new MailClient(config);
     const sendSignupData = mailClient
-        .sendSignup(to, data)
+        .sendSignup(to, event)
         .then((e) => { cb(null, e); })
         .catch(cb);
 
