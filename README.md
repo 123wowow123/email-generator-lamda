@@ -18,7 +18,10 @@ Send Template Email From Lamda
 `sam local start-api --env-vars env.json -d 5858`
 
 ## Packaging
-1. Create s3 bucket to `aws s3 mb s3://email-generator-lamda --region us-west-2`
+1. Create s3 bucket if no bucket has been created for this project yet 
+```
+aws s3 mb s3://email-generator-lamda --region us-west-2
+```
 
 2. Package script
 ```
