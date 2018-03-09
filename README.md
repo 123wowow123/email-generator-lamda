@@ -57,8 +57,8 @@ sam local start-api --env-vars env.json -d 5858
 
 
 #### Local invokation sample Uri 
-`http://127.0.0.1:3000/email?to=flynni2008@gmail.com&facebookId=10100470408434696&firstName=Ian&lastName=Flynn&gender=Male&locale=en_US&pictureUrl=https://graph.facebook.com/10100470408434696/picture?type=large&fbUpdatedTime=2018-03-08T05:55:49.620Z&fbverified=true&email=new_user@gmail.com&role=user&provider=facebook&about=check%20out%20www.DiceManiac.com
-`
+http://127.0.0.1:3000/email?to=flynni2008@gmail.com&facebookId=10100470408434696&firstName=Ian&lastName=Flynn&gender=Male&locale=en_US&pictureUrl=https://graph.facebook.com/10100470408434696/picture?type=large&fbUpdatedTime=2018-03-08T05:55:49.620Z&fbverified=true&email=new_user@gmail.com&role=user&provider=facebook&about=check%20out%20www.DiceManiac.com
+
 
 #### Prod invokation sample Uri 
-`https://69ck23loy8.execute-api.us-west-2.amazonaws.com/Prod/email?to=flynni2008@gmail.com&facebookId=10100470408434696&firstName=Ian&lastName=Flynn&gender=Male&locale=en_US&fbverified=true&email=new_user@gmail.com&role=user&provider=facebook&about=check%20out%20www.DiceManiac.com&fbUpdatedTime=2018-03-08T05:55:49.620Z&pictureUrl=https%3A%2F%2Fgraph.facebook.com%2F10100470408434696%2Fpicture%3Ftype%3Dlarge`
+https://69ck23loy8.execute-api.us-west-2.amazonaws.com/Prod/email?to=flynni2008@gmail.com&facebookId=10100470408434696&firstName=Ian&lastName=Flynn&gender=Male&locale=en_US&fbverified=true&email=new_user@gmail.com&role=user&provider=facebook&about=check%20out%20www.DiceManiac.com&fbUpdatedTime=2018-03-08T05:55:49.620Z&pictureUrl=https%3A%2F%2Fgraph.facebook.com%2F10100470408434696%2Fpicture%3Ftype%3Dlarge
