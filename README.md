@@ -29,7 +29,7 @@ aws cloudformation package \
 ```
 
 ## Deployment
-1, Deploy script
+1. Deploy script
 ```
 aws cloudformation deploy \
    --template-file serverless-output.yaml \
@@ -41,7 +41,7 @@ aws cloudformation deploy \
 ### Test Data Set
 
 #### Represendation inside event object within Lamda function
-```Perl
+```js
 {
     "queryStringParameters": {
         "to": "flynni2008@gmail.com",
