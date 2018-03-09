@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: My first serverless application.
+Resources:
+  Emails:
+    Properties:
+      CodeUri: s3://email-generator-lamda/4d37d2318d8a61f8219bf586134f7ca6
+      Environment:
+        Variables:
+          AZURE_STORAGE_CONNECTION_STRING: null
+          CRHONOPIN_SMTP_PASSWORD: null
+      Events:
+        Email:
+          Properties:
+            Method: get
+            Path: /email
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs6.10
+      Timeout: 10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
