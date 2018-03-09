@@ -20,16 +20,22 @@ Send Template Email From Lamda
 ## Packaging
 1. Create s3 bucket to `aws s3 mb s3://email-generator-lamda --region us-west-2`
 
-2. ```aws cloudformation package \
+2. Package script
+```
+aws cloudformation package \
    --template-file template.yaml \
    --output-template-file serverless-output.yaml \
-   --s3-bucket email-generator-lamda```
+   --s3-bucket email-generator-lamda
+```
 
 ## Deployment
-1. ```aws cloudformation deploy \
+1, Deploy script
+```
+aws cloudformation deploy \
    --template-file serverless-output.yaml \
    --stack-name email-generator-lamda-stack \
-   --capabilities CAPABILITY_IAM```
+   --capabilities CAPABILITY_IAM
+```
 
 
 ### Test Data Set
