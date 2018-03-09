@@ -26,9 +26,21 @@ exports.handler = function (event, context, cb) {
     // console.log(context)
     // console.log(context.getRemainingTimeInMillis())
 
-    //debugger
     const data = event.queryStringParameters;
+    if (!data) {
+        cb({
+            "statusCode": 422,
+            "body": "Email body query parameters missing"
+        });
+    }
     const to = data.to;
+    if (!to) {
+        cb({
+            "statusCode": 422,
+            "body": "Email 'to' query parameter missing"
+        });
+    }
+
 
     // const data = {
     //     "to": "flynni2008@gmail.com",
@@ -61,7 +73,6 @@ exports.handler = function (event, context, cb) {
     const sendSignupData = mailClient
         .sendSignup(to, data)
         .then((e) => {
-            debugger;
             cb(null, {
                 "statusCode": 200,
                 "body": JSON.stringify(e)

@@ -1,9 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Email Generator Lamda.
+Description: My first serverless application.
 Resources:
   Emails:
     Properties:
-      CodeUri: s3://email-generator-lamda/de6021a2c2ef7f299a7732a15e2a0a7e
+      CodeUri: s3://email-generator-lamda/4d37d2318d8a61f8219bf586134f7ca6
+      Environment:
+        Variables:
+          AZURE_STORAGE_CONNECTION_STRING: null
+          CRHONOPIN_SMTP_PASSWORD: null
       Events:
         Email:
           Properties:
