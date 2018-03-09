@@ -35,7 +35,7 @@ sam local start-api --env-vars env.json -d 5858
 ### Test Data Set
 
 #### Represendation inside event object within Lamda function
-```
+```json
 {
     "queryStringParameters": {
         "to": "flynni2008@gmail.com",
