@@ -1,41 +1,47 @@
 # email-generator-lamda
 Send Template Email From Lamda
 
-# Resources
+## Dependency
 1. [docker-lambda](https://github.com/lambci/docker-lambda)
 
 
 ## Local Logging
-sam local start-api --log-file ./output.log
+`sam local start-api --log-file ./output.log`
 
-sam local start-api --env-vars env.json
+`sam local start-api --env-vars env.json`
 
 ## Using an Environment Variables File
-sam local start-api --env-vars env.json
+`sam local start-api --env-vars env.json`
 
 ## Debugging With SAM Local
-sam local start-api -d 5858
-sam local start-api --env-vars env.json -d 5858
+`sam local start-api -d 5858`
+`sam local start-api --env-vars env.json -d 5858`
 
 ## Packaging
 1. Create s3 bucket to `aws s3 mb s3://email-generator-lamda --region us-west-2`
 
-2. `aws cloudformation package \
+2. Package script
+```
+aws cloudformation package \
    --template-file template.yaml \
    --output-template-file serverless-output.yaml \
-   --s3-bucket email-generator-lamda`
+   --s3-bucket email-generator-lamda
+```
 
 ## Deployment
-1. `aws cloudformation deploy \
+1. Deploy script
+```
+aws cloudformation deploy \
    --template-file serverless-output.yaml \
    --stack-name email-generator-lamda-stack \
-   --capabilities CAPABILITY_IAM`
+   --capabilities CAPABILITY_IAM
+```
 
 
 ### Test Data Set
 
 #### Represendation inside event object within Lamda function
-```json
+```js
 {
     "queryStringParameters": {
         "to": "flynni2008@gmail.com",
