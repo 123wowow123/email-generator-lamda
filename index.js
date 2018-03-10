@@ -9,6 +9,8 @@ const { MailClient } = require('email-generator');
 exports.handler = function (event, context, cb) {
     context.callbackWaitsForEmptyEventLoop = false
 
+    // console.log('CRHONOPIN_SMTP_PASSWORD', process.env.CRHONOPIN_SMTP_PASSWORD)
+    // console.log('AZURE_STORAGE_CONNECTION_STRING', process.env.AZURE_STORAGE_CONNECTION_STRING)
     // console.log(process.execPath)
     // console.log(process.execArgv)
     // console.log(process.argv)
@@ -26,58 +28,60 @@ exports.handler = function (event, context, cb) {
     // console.log(context)
     // console.log(context.getRemainingTimeInMillis())
 
-    const data = event.queryStringParameters;
-    if (!data) {
-        cb({
-            "statusCode": 422,
-            "body": "Email body query parameters missing"
-        });
-    }
-    const to = data.to;
-    if (!to) {
-        cb({
-            "statusCode": 422,
-            "body": "Email 'to' query parameter missing"
-        });
-    }
+    console.log('Processing Event:', JSON.stringify(event));
 
-
-    // const data = {
-    //     "to": "flynni2008@gmail.com",
-    //     "facebookId": 10100470408434696,
-    //     "firstName": "Ian",
-    //     "lastName": "Flynn",
-    //     "gender": "Male",
-    //     "locale": "en_US",
-    //     "pictureUrl": "https://graph.facebook.com/10100470408434696/picture?type=large",
-    //     "fbUpdatedTime": "2018-03-08T05:55:49.620Z",
-    //     "fbverified": true,
-    //     "email": "new_user@gmail.com",
-    //     "role": "user",
-    //     "provider": "facebook",
-    //     "about": "check out www.DiceManiac.com"
-    // };
-
-
-    console.log('CRHONOPIN_SMTP_PASSWORD', process.env.CRHONOPIN_SMTP_PASSWORD)
-    console.log('AZURE_STORAGE_CONNECTION_STRING', process.env.AZURE_STORAGE_CONNECTION_STRING)
-
-    let config = {
-        auth: {
-            pass: process.env.CRHONOPIN_SMTP_PASSWORD,
-        },
-        connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING
-    };
-
-    const mailClient = new MailClient(config);
-    const sendSignupData = mailClient
-        .sendSignup(to, data)
-        .then((e) => {
+    invoke(event, context, cb)
+        .then((success) => {
             cb(null, {
                 "statusCode": 200,
-                "body": JSON.stringify(e)
+                "body": JSON.stringify(success)
             });
         })
-        .catch(cb);
+        .catch((error) => {
+            if (typeof error === "object") {
+                cb(JSON.stringify(error));
+            }
+            else {
+                cb(error);
+            }
+        });
+}
+
+function invoke(event, context) {
+    return new Promise(function (resolve, reject) {
+
+        let data;
+        switch (event.httpMethod) {
+            case 'GET':
+                data = event.queryStringParameters;
+                break;
+            case 'POST':
+                data = JSON.stringify(event.body);
+                break;
+            default:
+                data = event;
+        }
+
+        if (!data) {
+            throw `Email body query parameters missing`;
+        }
+
+        const to = data.to;
+        if (!to) {
+            throw `Email 'to' query parameter missing`;
+        }
+
+        let config = {
+            auth: {
+                pass: process.env.CRHONOPIN_SMTP_PASSWORD,
+            },
+            connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING
+        };
+
+        const mailClient = new MailClient(config);
+        return sendSignupData = mailClient
+            .sendSignup(to, data);
+
+    });
 
 }

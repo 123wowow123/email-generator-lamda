@@ -8,17 +8,14 @@ Send Template Email From Lamda
 ## Local Logging
 `sam local start-api --log-file ./output.log`
 
-`sam local start-api --env-vars env.json`
-
 ## Using an Environment Variables File
 `sam local start-api --env-vars env.json`
 
 ## Debugging With SAM Local
-`sam local start-api -d 5858`
 `sam local start-api --env-vars env.json -d 5858`
 
 ## Packaging
-1. Create s3 bucket if no bucket has been created for this project yet 
+1. Create s3 bucket if no bucket has been created for this project yet  otherwise skip to step 2
 ```
 aws s3 mb s3://email-generator-lamda --region us-west-2
 ```
@@ -62,6 +59,25 @@ aws cloudformation deploy \
         "about": "check out www.DiceManiac.com"
     }
 }
+```
+
+```js
+{
+    "to": "flynni2008@gmail.com",
+    "facebookId": 10100470408434696,
+    "firstName": "Ian",
+    "lastName": "Flynn",
+    "gender": "Male",
+    "locale": "en_US",
+    "pictureUrl": "https://graph.facebook.com/10100470408434696/picture?type=large",
+    "fbUpdatedTime": "2018-03-08T05:55:49.620Z",
+    "fbverified": true,
+    "email": "new_user@gmail.com",
+    "role": "user",
+    "provider": "facebook",
+    "about": "check out www.DiceManiac.com"
+}
+
 ```
 
 
