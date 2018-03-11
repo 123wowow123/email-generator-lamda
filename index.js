@@ -13,7 +13,7 @@ class UnprocessableEntityError extends Error {
 
         // Maintains proper stack trace for where our error was thrown (only available on V8)
         if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, CustomError);
+            Error.captureStackTrace(this, UnprocessableEntityError);
         }
 
         // Custom debugging information
