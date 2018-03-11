@@ -56,7 +56,12 @@ function invoke(event, context) {
                 data = event.queryStringParameters;
                 break;
             case 'POST':
-                data = JSON.stringify(event.body);
+                let parsedData = JSON.parse(event.body);
+                if (event.headers && event.headers["User-Agent"] === "Amazon Simple Notification Service Agent") {
+                    data = JSON.parse(parsedData.Message);
+                } else {
+                    data = parsedData;
+                }
                 break;
             default:
                 data = event;
