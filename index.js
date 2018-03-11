@@ -6,6 +6,27 @@
 const { MailClient } = require('email-generator');
 //const emailGenerator = require('nodemailer');
 
+class UnprocessableEntityError extends Error {
+    constructor(...params) {
+        // Pass remaining arguments (including vendor specific ones) to parent constructor
+        super(...params);
+
+        // Maintains proper stack trace for where our error was thrown (only available on V8)
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, CustomError);
+        }
+
+        // Custom debugging information
+        this.statusCode = 422;
+    }
+    toLamdaError() {
+        return {
+            "statusCode": this.statusCode,
+            "body": this.message
+        }
+    }
+}
+
 exports.handler = function (event, context, cb) {
     context.callbackWaitsForEmptyEventLoop = false
 
@@ -32,17 +53,23 @@ exports.handler = function (event, context, cb) {
 
     invoke(event, context, cb)
         .then((success) => {
+            console.log('Invoke Success Response:', JSON.stringify(success));
             cb(null, {
                 "statusCode": 200,
                 "body": JSON.stringify(success)
             });
         })
         .catch((error) => {
-            if (typeof error === "object") {
-                cb(JSON.stringify(error));
+            console.log('Invoke Error Response:', JSON.stringify(error));
+
+            if (error instanceof UnprocessableEntityError) {
+                cb(error.toLamdaError());
             }
             else {
-                cb(error);
+                cb({
+                    "statusCode": 500,
+                    "body": JSON.stringify(error)
+                });
             }
         });
 }
@@ -68,12 +95,12 @@ function invoke(event, context) {
         }
 
         if (!data) {
-            throw `Email body query parameters missing`;
+            throw new UnprocessableEntityError(`Email 'body' query parameters missing`);
         }
 
         const to = data.to;
         if (!to) {
-            throw `Email 'to' query parameter missing`;
+            throw new UnprocessableEntityError(`Email 'to' query parameter missing`);
         }
 
         let config = {
