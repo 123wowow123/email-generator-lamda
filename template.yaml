@@ -12,8 +12,8 @@ Resources:
       Timeout: 10
       Environment:
         Variables:
-          CRHONOPIN_SMTP_PASSWORD:
-          AZURE_STORAGE_CONNECTION_STRING:
+          CRHONOPIN_SMTP_PASSWORD: If641812!@
+          AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=https;AccountName=chronopin;AccountKey=S61x+kGTBaVbcGhMveyLXFFRFdg8V8xOr+saHi/bOWAeUYUZqe67TruW7cpseSH2qiQxd6dzMNqzmJ8i7nvdHw==
       Events:
         Email:
           Type: Api
