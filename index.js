@@ -50,7 +50,6 @@ exports.handler = function (event, context, cb) {
     // console.log(context.getRemainingTimeInMillis())
 
     console.log('Processing Event:', JSON.stringify(event));
-
     invoke(event, context, cb)
         .then((success) => {
             console.log('Invoke Success Response:', JSON.stringify(success));
@@ -61,7 +60,6 @@ exports.handler = function (event, context, cb) {
         })
         .catch((error) => {
             console.log('Invoke Error Response:', JSON.stringify(error));
-
             if (error instanceof UnprocessableEntityError) {
                 cb(error.toLamdaError());
             }
@@ -75,45 +73,46 @@ exports.handler = function (event, context, cb) {
 }
 
 function invoke(event, context) {
-    return new Promise(function (resolve, reject) {
+    return Promise.resolve('invoke')
+        .then(() => {
 
-        let data;
-        switch (event.httpMethod) {
-            case 'GET':
-                data = event.queryStringParameters;
-                break;
-            case 'POST':
-                let parsedData = JSON.parse(event.body);
-                if (event.headers && event.headers["User-Agent"] === "Amazon Simple Notification Service Agent") {
-                    data = JSON.parse(parsedData.Message);
-                } else {
-                    data = parsedData;
-                }
-                break;
-            default:
-                data = event;
-        }
+            let data;
+            switch (event.httpMethod) {
+                case 'GET':
+                    data = event.queryStringParameters;
+                    break;
+                case 'POST':
+                    let parsedData = JSON.parse(event.body);
+                    if (event.headers && event.headers["User-Agent"] === "Amazon Simple Notification Service Agent") {
+                        data = JSON.parse(parsedData.Message);
+                    } else {
+                        data = parsedData;
+                    }
+                    break;
+                default:
+                    data = event;
+            }
 
-        if (!data) {
-            throw new UnprocessableEntityError(`Email 'body' query parameters missing`);
-        }
+            if (!data) {
+                throw new UnprocessableEntityError(`Email 'body' query parameters missing`);
+            }
 
-        const to = data.to;
-        if (!to) {
-            throw new UnprocessableEntityError(`Email 'to' query parameter missing`);
-        }
+            const to = data.to;
+            if (!to) {
+                throw new UnprocessableEntityError(`Email 'to' query parameter missing`);
+            }
 
-        let config = {
-            auth: {
-                pass: process.env.CRHONOPIN_SMTP_PASSWORD,
-            },
-            connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING
-        };
+            let config = {
+                auth: {
+                    pass: process.env.CRHONOPIN_SMTP_PASSWORD,
+                },
+                connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING
+            };
 
-        const mailClient = new MailClient(config);
-        return sendSignupData = mailClient
-            .sendSignup(to, data);
+            const mailClient = new MailClient(config);
+            return sendSignupData = mailClient
+                .sendSignup(to, data);
 
-    });
+        });
 
 }
