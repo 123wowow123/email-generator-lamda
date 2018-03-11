@@ -3,13 +3,18 @@ Description: My first serverless application.
 Resources:
   Emails:
     Properties:
-      CodeUri: s3://email-generator-lamda/4d37d2318d8a61f8219bf586134f7ca6
+      CodeUri: s3://email-generator-lamda/a86bb17c3b281d25cb8c39c7f8dc62f4
       Environment:
         Variables:
           AZURE_STORAGE_CONNECTION_STRING: null
           CRHONOPIN_SMTP_PASSWORD: null
       Events:
-        Email:
+        CreateEmail:
+          Properties:
+            Method: post
+            Path: /email
+          Type: Api
+        GetEmail:
           Properties:
             Method: get
             Path: /email
